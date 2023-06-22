@@ -5,6 +5,7 @@ const pokemonsNumbers = 10;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi';
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
+const popUpBox = document.querySelector('.pop-up-box');
 let pokemons = [];
 let gameId;
 
@@ -62,13 +63,53 @@ const addReaction = async (reactionBtn) => {
     e.target.nextElementSibling.textContent = `${reactionNumbers[currentId].likes}`;
   });
 };
+const closePopUp = (closeCommentBtn, overLay) => {
+  closeCommentBtn.addEventListener('click', (e) => {
+    popUpBox.classList.add('hidePopUp');
+    overLay.classList.add('hidePopUp');
+  })
+};
 
 const createCommentBox = async (commentBtn, pokemons) => {
-    commentBtn.addEventListener('click', (e) => {
-      let id = e.target.id - 1;
-      console.log(pokemons[id].name)
-    })
-}
+  commentBtn.addEventListener('click', (e) => {
+    const id = e.target.id - 1;
+    console.log(pokemons[id].abilities[0].ability.name);
+    console.log(pokemons)
+    popUpBox.classList.remove('hidePopUp')
+    popUpBox.innerHTML = `
+    <div class="icon-container text-end">
+    <i class="fa-solid fa-xmark close-comment-btn"></i>
+</div>
+<figure class="popup-img-container text-center">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemons[id].id}.png" alt ="${pokemons[id].name}" class="pop-up-image">
+</figure>
+<h3 class="text-center pop-up-title">${pokemons[id].name}</h3>
+<div class="row row-cols-2 mx-auto text-container">
+    <div class="col text-center">Main Ability</div>
+    <div class="col text-center">${pokemons[id].abilities[0].ability.name}</div>
+    <div class="col text-center">Base Experience</div>
+    <div class="col text-center">${pokemons[id].base_experience}</div>
+</div>
+<h3 class="comment-title text-center">Comments <span>count</span></h3>
+<ul class="comments-container text-center">
+    <li>comment1</li>
+    <li>comment2</li>
+</ul>
+<h3 class="text-center">Add a Comment</h3>
+<div class="form-container d-flex flex-column w-50 mx-auto">
+    <input type="text" name="comment">
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <button class="comment-button">Comment</button>
+</div>
+    `;
+    const overLay = document.createElement('div');
+    overLay.classList.add('overlay');
+    popUpBox.insertAdjacentElement('afterend', overLay);
+
+    const closeCommentBtn = document.querySelector('.close-comment-btn');
+    closePopUp(closeCommentBtn, overLay);
+  });
+};
 
 function createPokemonCard(pokemon) {
   pokemonCardsContainer.innerHTML += `
