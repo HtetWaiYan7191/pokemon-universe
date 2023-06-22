@@ -1,8 +1,8 @@
-const getAllPokemons = async (id,pokemons,base_url) => {
-    const result = await fetch(`${base_url}/${id}`);
-    const new_poke = await result.json();
-    pokemons = [...pokemons,new_poke];
-    return pokemons;
-}
+const getAllPokemons = async (id, pokemons, baseUrl) => {
+  const result = await fetch(`${baseUrl}/${id}`);
+  const newPoke = await result.json();
+  pokemons = [...pokemons, newPoke];
+  return pokemons;
+};
 
 export default getAllPokemons;
