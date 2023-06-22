@@ -35,19 +35,17 @@ const getAppData = async () => {
 
 const getReaction = async () => {
   const appId = gameId;
-  console.log(appId);
   const url = `${reactionBaseUrl}/apps/${appId}/likes`;
   const result = await fetch(`${url}`);
   // const contentType = result.headers.get('content-type');
-  const reactionNumbers = result.text();
+  const reactionNumbers = await result.text();
   return reactionNumbers;
 };
 
-const addReaction = async (reactionBtn) => {
+const addReaction = async (reactionBtn, reactionCounts) => {
   reactionBtn.addEventListener('click', async (e) => {
     const id = await getAppData();
     const appId = id;
-    console.log(`${appId} addreactionID`);
     const item = { item_id: `${e.target.id}` };
     const url = `${reactionBaseUrl}/apps/${appId}/likes`;
     const requestOptions = {
@@ -59,10 +57,10 @@ const addReaction = async (reactionBtn) => {
     };
 
     const result = await fetch(`${url}`, requestOptions);
-    // const contentType = result.headers.get('content-type');
     const reactionNumbersStr = await getReaction();
     const reactionNumbers = JSON.parse(reactionNumbersStr);
-    console.log(reactionNumbers[0].likes)
+    const currentId = e.target.id - 1;
+    e.target.nextElementSibling.textContent = `${reactionNumbers[currentId].likes}`;
   });
 };
 
@@ -78,7 +76,7 @@ function createPokemonCard(pokemon) {
                 </figcaption>
                 <div class="reaction">
                     <i class="fa-regular fa-heart" id="${pokemon.id}"></i>
-                    <span class="reaction-count">48</span>
+                    <span class="reaction-count"></span>
                 </div>
             </div>
             <div class="button-container">
@@ -91,8 +89,9 @@ function createPokemonCard(pokemon) {
     `;
 
   const reactionBtns = document.querySelectorAll('.fa-heart');
-  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
-  // const reactionCount = document.querySelectorAll('reaction-count');
+  const reactionCounts = document.querySelectorAll('.reaction-count');
+  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn, reactionCounts));
+  
 }
 
 const fetchPokemons = async () => {
