@@ -60,10 +60,9 @@ const addReaction = async (reactionBtn) => {
 
     const result = await fetch(`${url}`, requestOptions);
     // const contentType = result.headers.get('content-type');
-    const resolve = await result.text();
-
-    const reactionNumbers = await getReaction();
-    console.log(reactionNumbers);
+    const reactionNumbersStr = await getReaction();
+    const reactionNumbers = JSON.parse(reactionNumbersStr);
+    console.log(reactionNumbers[0].likes)
   });
 };
 
