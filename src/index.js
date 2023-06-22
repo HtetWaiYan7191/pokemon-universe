@@ -70,6 +70,14 @@ const closePopUp = (closeCommentBtn, overLay) => {
   })
 };
 
+const sendCommentToApi = (submitComment, userNameInput, userCommentInput) => {
+  submitComment.addEventListener('click', () => {
+    const userName = userNameInput.value.trim();
+    const userComment = userCommentInput.value.trim();
+    console.log(userName)
+  })
+}
+
 const createCommentBox = async (commentBtn, pokemons) => {
   commentBtn.addEventListener('click', (e) => {
     const id = e.target.id - 1;
@@ -97,9 +105,9 @@ const createCommentBox = async (commentBtn, pokemons) => {
 </ul>
 <h3 class="text-center">Add a Comment</h3>
 <div class="form-container d-flex flex-column w-50 mx-auto">
-    <input type="text" name="comment">
-    <textarea name="" id="" cols="30" rows="10"></textarea>
-    <button class="comment-button">Comment</button>
+    <input type="text" name="user-name" placeholder="Your Name" id="user-name">
+    <textarea name="user-comment" id="user-comment" cols="15" rows="10" placeholder="Your Comments"></textarea>
+    <button class="comment-button" id="comment-btn">Comment</button>
 </div>
     `;
     const overLay = document.createElement('div');
@@ -108,7 +116,20 @@ const createCommentBox = async (commentBtn, pokemons) => {
 
     const closeCommentBtn = document.querySelector('.close-comment-btn');
     closePopUp(closeCommentBtn, overLay);
+
+    const submitComment = document.getElementById('comment-btn');
+    submitComment.addEventListener('click', () => {
+      const userNameInput = document.getElementById('user-name');
+      const userCommentInput = document.getElementById('user-comment');
+      const userName = userNameInput.value.trim();
+      const userComment = userCommentInput.value.trim();
+      console.log([userName,userComment])
+    });
   });
+
+
+
+  // sendCommentToApi(submitComment, userNameInput, userCommentInput);
 };
 
 function createPokemonCard(pokemon) {
