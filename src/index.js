@@ -67,23 +67,36 @@ const closePopUp = (closeCommentBtn, overLay) => {
   closeCommentBtn.addEventListener('click', (e) => {
     popUpBox.classList.add('hidePopUp');
     overLay.classList.add('hidePopUp');
-  })
+  });
 };
 
-const sendCommentToApi = (submitComment, userNameInput, userCommentInput) => {
-  submitComment.addEventListener('click', () => {
-    const userName = userNameInput.value.trim();
-    const userComment = userCommentInput.value.trim();
-    console.log(userName)
-  })
-}
+const sendCommentsToApi = async (userName, userComment, id) => {
+  const appId = await getAppData();
+  const userData = {
+    item_id: id,
+    username: userName,
+    comment: userComment,
+  };
+
+  const url = `${reactionBaseUrl}/apps/${appId}/comments`;
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(userData),
+  };
+
+  const result = await fetch(`${url}`, requestOptions);
+  const data = await result.text();
+};
 
 const createCommentBox = async (commentBtn, pokemons) => {
   commentBtn.addEventListener('click', (e) => {
     const id = e.target.id - 1;
     console.log(pokemons[id].abilities[0].ability.name);
-    console.log(pokemons)
-    popUpBox.classList.remove('hidePopUp')
+    console.log(pokemons);
+    popUpBox.classList.remove('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
     <i class="fa-solid fa-xmark close-comment-btn"></i>
@@ -123,11 +136,9 @@ const createCommentBox = async (commentBtn, pokemons) => {
       const userCommentInput = document.getElementById('user-comment');
       const userName = userNameInput.value.trim();
       const userComment = userCommentInput.value.trim();
-      console.log([userName,userComment])
+      sendCommentsToApi(userName, userComment, e.target.id);
     });
   });
-
-
 
   // sendCommentToApi(submitComment, userNameInput, userCommentInput);
 };
