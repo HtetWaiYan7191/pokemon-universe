@@ -8,3 +8,8 @@ main {
     width: 80%;
     margin-top: 20px;
 }
+
+.pokemon-image {
+    width: 100px;
+    height: 100px;
+}
