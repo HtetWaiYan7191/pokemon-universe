@@ -15,7 +15,6 @@ let gameId;
 
 const getAppData = async () => {
   if (gameId) {
-    console.log(`this is gameID ${gameId}`);
     return gameId;
   }
   const requestOptions = {
@@ -42,7 +41,7 @@ const getReaction = async () => {
   return reactionNumbers;
 };
 
-const addReaction = async (reactionBtn, reactionCounts) => {
+const addReaction = async (reactionBtn) => {
   reactionBtn.addEventListener('click', async (e) => {
     const id = await getAppData();
     const appId = id;
@@ -64,6 +63,13 @@ const addReaction = async (reactionBtn, reactionCounts) => {
   });
 };
 
+const createCommentBox = async (commentBtn, pokemons) => {
+    commentBtn.addEventListener('click', (e) => {
+      let id = e.target.id - 1;
+      console.log(pokemons[id].name)
+    })
+}
+
 function createPokemonCard(pokemon) {
   pokemonCardsContainer.innerHTML += `
     <div class="col-3">
@@ -80,18 +86,20 @@ function createPokemonCard(pokemon) {
                 </div>
             </div>
             <div class="button-container">
-                <button class="m-2 w-100">Comments</button>
+                <button class="m-2 w-100 comment-btn" id=${pokemon.id}>Comments</button>
             </div>
             <div class="button-container">
-                <button class="m-2 w-100">Reservations</button>
+                <button class="m-2 w-100 reserve-btn">Reservations</button>
             </div>   
         </div>
     `;
 
   const reactionBtns = document.querySelectorAll('.fa-heart');
-  const reactionCounts = document.querySelectorAll('.reaction-count');
-  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn, reactionCounts));
-  
+  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
+
+  const commentBtns = document.querySelectorAll('.comment-btn');
+  commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons));
+  const reserveBtns = document.querySelectorAll('.reserve-btn');
 }
 
 const fetchPokemons = async () => {
