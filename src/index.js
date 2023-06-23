@@ -99,7 +99,7 @@ const sendReservesToApi = async () => {
 
   };
   const url = `${reactionBaseUrl}/apps/${appId}/reservations`;
-}
+};
 
 const getCommentsFromApi = async (id) => {
   const appId = await getAppData();
@@ -179,7 +179,6 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
 const createReserveBox = async (reserveBtn, pokemons) => {
   reserveBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
-    console.log(id)
     popUpBox.classList.remove('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
