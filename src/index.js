@@ -94,13 +94,26 @@ const getCommentsFromApi = async (id) => {
   const result = await fetch(`${url}`);
   let comments = await result.text();
   comments = JSON.parse(comments)
-  console.log(comments)
   return comments;
 };
-
+const checkComments = async (comments, id) => {
+  let count = 0;
+  if(count === 0) {
+    comments = 'no comment';
+    count += 1 ;
+    return comments;
+  } else {
+    comments = await getCommentsFromApi(id);
+    console.log('else' + comments)
+    return comments;
+  }
+}
 const createCommentBox = async (commentBtn, pokemons) => {
   commentBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
+    let comments = await getCommentsFromApi(pokemons[id].id);
+    comments = await checkComments(comments, pokemons[id].id);
+   console.log(comments)
     popUpBox.classList.remove('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
@@ -118,8 +131,8 @@ const createCommentBox = async (commentBtn, pokemons) => {
 </div>
 <h3 class="comment-title text-center">Comments <span>count</span></h3>
 <ul class="comments-container text-center">
-    <li>This is comment 1 </li>
-    <li>comment2</li>
+    <li>${comments}</li>
+    <li>${comments}</li>
 </ul>
 <h3 class="text-center">Add a Comment</h3>
 <div class="form-container d-flex flex-column w-50 mx-auto">
@@ -144,13 +157,11 @@ const createCommentBox = async (commentBtn, pokemons) => {
       sendCommentsToApi(userName, userComment, e.target.id);
       userNameInput.value = '';
       userCommentInput.value = '';
-      const comments = await getCommentsFromApi(pokemons[id].id);
-      console.log(comments)
     });
   });
 };
 
-function createPokemonCard(pokemon) {
+async function createPokemonCard(pokemon) {
   pokemonCardsContainer.innerHTML += `
     <div class="col-3">
             <figure class="image-container text-center">
@@ -180,6 +191,9 @@ function createPokemonCard(pokemon) {
   const commentBtns = document.querySelectorAll('.comment-btn');
   commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons));
   const reserveBtns = document.querySelectorAll('.reserve-btn');
+
+ 
+
 }
 
 const fetchPokemons = async () => {
