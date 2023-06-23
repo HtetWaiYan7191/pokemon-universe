@@ -9,11 +9,6 @@ const popUpBox = document.querySelector('.pop-up-box');
 let pokemons = [];
 let gameId;
 
-// const getData = (id) => {
-//   const appId = id;
-//   return appId;
-// };
-
 const getAppData = async () => {
   if (gameId) {
     return gameId;
@@ -39,6 +34,7 @@ const getReaction = async () => {
   const result = await fetch(`${url}`);
   // const contentType = result.headers.get('content-type');
   const reactionNumbers = await result.text();
+  console.log(reactionNumbers)
   return reactionNumbers;
 };
 
@@ -89,13 +85,22 @@ const sendCommentsToApi = async (userName, userComment, id) => {
 
   const result = await fetch(`${url}`, requestOptions);
   const data = await result.text();
+  console.log(data)
+};
+
+const getCommentsFromApi = async (id) => {
+  const appId = await getAppData();
+  const url = `${reactionBaseUrl}/apps/${appId}/comments?item_id=${id}`;
+  const result = await fetch(`${url}`);
+  let comments = await result.text();
+  comments = JSON.parse(comments)
+  console.log(comments)
+  return comments;
 };
 
 const createCommentBox = async (commentBtn, pokemons) => {
-  commentBtn.addEventListener('click', (e) => {
+  commentBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
-    console.log(pokemons[id].abilities[0].ability.name);
-    console.log(pokemons);
     popUpBox.classList.remove('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
@@ -113,7 +118,7 @@ const createCommentBox = async (commentBtn, pokemons) => {
 </div>
 <h3 class="comment-title text-center">Comments <span>count</span></h3>
 <ul class="comments-container text-center">
-    <li>comment1</li>
+    <li>This is comment 1 </li>
     <li>comment2</li>
 </ul>
 <h3 class="text-center">Add a Comment</h3>
@@ -131,16 +136,18 @@ const createCommentBox = async (commentBtn, pokemons) => {
     closePopUp(closeCommentBtn, overLay);
 
     const submitComment = document.getElementById('comment-btn');
-    submitComment.addEventListener('click', () => {
+    submitComment.addEventListener('click', async () => {
       const userNameInput = document.getElementById('user-name');
       const userCommentInput = document.getElementById('user-comment');
       const userName = userNameInput.value.trim();
       const userComment = userCommentInput.value.trim();
       sendCommentsToApi(userName, userComment, e.target.id);
+      userNameInput.value = '';
+      userCommentInput.value = '';
+      const comments = await getCommentsFromApi(pokemons[id].id);
+      console.log(comments)
     });
   });
-
-  // sendCommentToApi(submitComment, userNameInput, userCommentInput);
 };
 
 function createPokemonCard(pokemon) {
