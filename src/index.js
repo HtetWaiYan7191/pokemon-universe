@@ -85,7 +85,6 @@ const sendCommentsToApi = async (userName, userComment, id) => {
 
   const result = await fetch(`${url}`, requestOptions);
   const data = await result.text();
-  console.log(data)
 };
 
 const getCommentsFromApi = async (id) => {
@@ -93,27 +92,13 @@ const getCommentsFromApi = async (id) => {
   const url = `${reactionBaseUrl}/apps/${appId}/comments?item_id=${id}`;
   const result = await fetch(`${url}`);
   let comments = await result.text();
-  comments = JSON.parse(comments)
+  comments = JSON.parse(comments);
   return comments;
 };
-const checkComments = async (comments, id) => {
-  let count = 0;
-  if(count === 0) {
-    comments = 'no comment';
-    count += 1 ;
-    return comments;
-  } else {
-    comments = await getCommentsFromApi(id);
-    console.log('else' + comments)
-    return comments;
-  }
-}
+
 const createCommentBox = async (commentBtn, pokemons) => {
   commentBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
-    let comments = await getCommentsFromApi(pokemons[id].id);
-    comments = await checkComments(comments, pokemons[id].id);
-   console.log(comments)
     popUpBox.classList.remove('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
@@ -129,10 +114,9 @@ const createCommentBox = async (commentBtn, pokemons) => {
     <div class="col text-center">Base Experience</div>
     <div class="col text-center">${pokemons[id].base_experience}</div>
 </div>
-<h3 class="comment-title text-center">Comments <span>count</span></h3>
+<h3 class="comment-title text-center">Comments<span id="comment-count">0</span></h3>
 <ul class="comments-container text-center">
-    <li>${comments}</li>
-    <li>${comments}</li>
+   
 </ul>
 <h3 class="text-center">Add a Comment</h3>
 <div class="form-container d-flex flex-column w-50 mx-auto">
@@ -144,6 +128,7 @@ const createCommentBox = async (commentBtn, pokemons) => {
     const overLay = document.createElement('div');
     overLay.classList.add('overlay');
     popUpBox.insertAdjacentElement('afterend', overLay);
+    const commentContainer = document.querySelector('.comments-container');
 
     const closeCommentBtn = document.querySelector('.close-comment-btn');
     closePopUp(closeCommentBtn, overLay);
@@ -154,9 +139,15 @@ const createCommentBox = async (commentBtn, pokemons) => {
       const userCommentInput = document.getElementById('user-comment');
       const userName = userNameInput.value.trim();
       const userComment = userCommentInput.value.trim();
-      sendCommentsToApi(userName, userComment, e.target.id);
+      const result = await sendCommentsToApi(userName, userComment, e.target.id);
       userNameInput.value = '';
       userCommentInput.value = '';
+      const comments = await getCommentsFromApi(pokemons[id].id);
+      const listElement = document.createElement('li');
+      const commentCount = document.getElementById('comment-count');
+      commentCount.textContent = `${comments.length}`;
+      listElement.textContent = `${comments[id].creation_date} ${comments[id].username} ${comments[id].comment}`;
+      commentContainer.appendChild(listElement);
     });
   });
 };
