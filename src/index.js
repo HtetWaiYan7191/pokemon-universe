@@ -9,6 +9,7 @@ const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi';
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
 const popUpBox = document.querySelector('.pop-up-box');
+popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 let gameId;
 
@@ -145,12 +146,15 @@ const createCommentBox = async (commentBtn, pokemons) => {
       const result = await sendCommentsToApi(userName, userComment, e.target.id);
       userNameInput.value = '';
       userCommentInput.value = '';
+      commentContainer.innerHTML = '';
       const comments = await getCommentsFromApi(pokemons[id].id);
-      const listElement = document.createElement('li');
-      const commentCount = document.getElementById('comment-count');
-      commentCount.textContent = `${comments.length}`;
-      listElement.textContent = `${comments[id].creation_date} ${comments[id].username} ${comments[id].comment}`;
-      commentContainer.appendChild(listElement);
+      comments.forEach((comment, id) => {
+        const listElement = document.createElement('li');
+        const commentCount = document.getElementById('comment-count');
+        commentCount.textContent = `${comments.length}`;
+        listElement.textContent = `${comment.creation_date} ${comment.username} ${comment.comment}`;
+        commentContainer.appendChild(listElement);
+      });
     });
   });
 };
