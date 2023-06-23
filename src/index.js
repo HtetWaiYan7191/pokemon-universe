@@ -10,6 +10,7 @@ const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
 const popUpBox = document.querySelector('.pop-up-box');
 const commentStore = [];
+const reserveStore = [];
 popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 let gameId;
@@ -92,6 +93,14 @@ const sendCommentsToApi = async (userName, userComment, id) => {
   return data;
 };
 
+const sendReservesToApi = async () => {
+  const appId = await getAppData();
+  const reserveData = {
+
+  };
+  const url = `${reactionBaseUrl}/apps/${appId}/reservations`;
+}
+
 const getCommentsFromApi = async (id) => {
   const appId = await getAppData();
   const url = `${reactionBaseUrl}/apps/${appId}/comments?item_id=${id}`;
@@ -167,6 +176,66 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   });
 };
 
+const createReserveBox = async (reserveBtn, pokemons) => {
+  reserveBtn.addEventListener('click', async (e) => {
+    const id = e.target.id - 1;
+    console.log(id)
+    popUpBox.classList.remove('hidePopUp');
+    popUpBox.innerHTML = `
+    <div class="icon-container text-end">
+    <i class="fa-solid fa-xmark close-reserve-btn"></i>
+</div>
+<figure class="popup-img-container text-center">
+<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemons[id].id}.png" alt ='${pokemons[id].name}' class="pop-up-image">
+</figure>
+<h3 class="text-center pop-up-title">${pokemons[id].name}</h3>
+<div class="row row-cols-2 mx-auto text-container">
+    <div class="col text-center">Main Ability</div>
+    <div class="col text-center">${pokemons[id].abilities[0].ability.name}</div>
+    <div class="col text-center">Base Experience</div>
+    <div class="col text-center">${pokemons[id].base_experience}</div>
+</div>
+<h3 class="comment-title text-center">Reservations<span id="reserve-count">0</span></h3>
+<ul class="reserve-container text-center">
+   
+</ul>
+<h3 class="text-center">Add a Reservation</h3>
+<div class="form-container d-flex flex-column w-50 mx-auto">
+    <input type="text" name="user-name" placeholder="Your Name" id="user-name">
+    <input type="date" name="start-date" placeholder="Start Date" id="start-date">
+    <input type="date" name="end-date" placeholder="End Date" id="end-date">
+    <button class="reserve-button" id="reserve-btn">Comment</button>
+</div>
+    `;
+    const overLay = document.createElement('div');
+    overLay.classList.add('overlay');
+    popUpBox.insertAdjacentElement('afterend', overLay);
+    const reserveContainer = document.querySelector('.reserve-container');
+
+    // createComments(reserveContainer, commentStore);
+
+    const closeReserveBtn = document.querySelector('.close-reserve-btn');
+    closePopUp(closeReserveBtn, overLay);
+
+    const reserveBtn = document.getElementById('reserve-btn');
+    // reserveBtn.addEventListener('click', async () => {
+    //   const userNameInput = document.getElementById('user-name');
+    //   const startDateInput = document.getElementById('start-date');
+    //   const endDateInput = document.getElementById('end-date');
+    //   const userName = userNameInput.value.trim();
+    //   const startDate = startDateInput.value;
+    //   const endDate = endDateInput.value;
+    //   const result = await sendCommentsToApi(userName, userComment, e.target.id);
+    //   userNameInput.value = '';
+    //   userCommentInput.value = '';
+    //   reserveContainer.innerHTML = '';
+    //   const comments = await getCommentsFromApi(pokemons[id].id);
+    //   commentStore = [...comments];
+    //   createComments(reserveContainer, commentStore);
+    // });
+  });
+};
+
 async function createPokemonCard(pokemon) {
   pokemonCardsContainer.innerHTML += `
     <div class="col-3">
@@ -186,7 +255,7 @@ async function createPokemonCard(pokemon) {
                 <button class="m-2 w-100 comment-btn" id=${pokemon.id}>Comments</button>
             </div>
             <div class="button-container">
-                <button class="m-2 w-100 reserve-btn">Reservations</button>
+                <button class="m-2 w-100 reserve-btn" id=${pokemon.id}>Reservations</button>
             </div>   
         </div>
     `;
@@ -196,7 +265,9 @@ async function createPokemonCard(pokemon) {
 
   const commentBtns = document.querySelectorAll('.comment-btn');
   commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons, commentStore));
-  // const reserveBtns = document.querySelectorAll('.reserve-btn');
+
+  const reserveBtns = document.querySelectorAll('.reserve-btn');
+  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons));
 }
 
 const fetchPokemons = async () => {
