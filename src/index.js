@@ -1,3 +1,6 @@
+/*  eslint-disable no-await-in-loop */
+/*  eslint-disable no-unused-vars */
+
 import './style.css';
 import getAllPokemons from './modules/getAllPokemons.js';
 
@@ -34,7 +37,6 @@ const getReaction = async () => {
   const result = await fetch(`${url}`);
   // const contentType = result.headers.get('content-type');
   const reactionNumbers = await result.text();
-  console.log(reactionNumbers)
   return reactionNumbers;
 };
 
@@ -60,7 +62,7 @@ const addReaction = async (reactionBtn) => {
   });
 };
 const closePopUp = (closeCommentBtn, overLay) => {
-  closeCommentBtn.addEventListener('click', (e) => {
+  closeCommentBtn.addEventListener('click', () => {
     popUpBox.classList.add('hidePopUp');
     overLay.classList.add('hidePopUp');
   });
@@ -85,6 +87,7 @@ const sendCommentsToApi = async (userName, userComment, id) => {
 
   const result = await fetch(`${url}`, requestOptions);
   const data = await result.text();
+  return data;
 };
 
 const getCommentsFromApi = async (id) => {
@@ -181,10 +184,7 @@ async function createPokemonCard(pokemon) {
 
   const commentBtns = document.querySelectorAll('.comment-btn');
   commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons));
-  const reserveBtns = document.querySelectorAll('.reserve-btn');
-
- 
-
+  // const reserveBtns = document.querySelectorAll('.reserve-btn');
 }
 
 const fetchPokemons = async () => {
