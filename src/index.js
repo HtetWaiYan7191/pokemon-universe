@@ -9,6 +9,7 @@ const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi';
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
 const popUpBox = document.querySelector('.pop-up-box');
+let commentStore = [];
 popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 let gameId;
@@ -100,7 +101,17 @@ const getCommentsFromApi = async (id) => {
   return comments;
 };
 
-const createCommentBox = async (commentBtn, pokemons) => {
+const createComments = (commentContainer, commentStore) => {
+  commentStore.forEach((comment, id) => {
+    const listElement = document.createElement('li');
+    const commentCount = document.getElementById('comment-count');
+    commentCount.textContent = `${commentStore.length}`;
+    listElement.textContent = `${comment.creation_date} ${comment.username} ${comment.comment}`;
+    commentContainer.appendChild(listElement);
+  });
+}
+
+const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   commentBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
     popUpBox.classList.remove('hidePopUp');
@@ -134,6 +145,8 @@ const createCommentBox = async (commentBtn, pokemons) => {
     popUpBox.insertAdjacentElement('afterend', overLay);
     const commentContainer = document.querySelector('.comments-container');
 
+    createComments(commentContainer, commentStore);
+
     const closeCommentBtn = document.querySelector('.close-comment-btn');
     closePopUp(closeCommentBtn, overLay);
 
@@ -148,13 +161,9 @@ const createCommentBox = async (commentBtn, pokemons) => {
       userCommentInput.value = '';
       commentContainer.innerHTML = '';
       const comments = await getCommentsFromApi(pokemons[id].id);
-      comments.forEach((comment, id) => {
-        const listElement = document.createElement('li');
-        const commentCount = document.getElementById('comment-count');
-        commentCount.textContent = `${comments.length}`;
-        listElement.textContent = `${comment.creation_date} ${comment.username} ${comment.comment}`;
-        commentContainer.appendChild(listElement);
-      });
+      commentStore = [...comments];
+      createComments(commentContainer, commentStore)
+      
     });
   });
 };
@@ -187,7 +196,7 @@ async function createPokemonCard(pokemon) {
   reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
 
   const commentBtns = document.querySelectorAll('.comment-btn');
-  commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons));
+  commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons, commentStore));
   // const reserveBtns = document.querySelectorAll('.reserve-btn');
 }
 
