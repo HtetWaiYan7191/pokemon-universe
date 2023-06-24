@@ -10,7 +10,7 @@ const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
 const popUpBox = document.querySelector('.pop-up-box');
 const commentStore = [];
-const reserveStore = [];
+let reserveStore = [];
 popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 let gameId;
@@ -99,7 +99,7 @@ const sendReservesToApi = async (userName, startDate, endDate, id) => {
     item_id: id,
     username: userName,
     date_start: startDate,
-    date_end: endDate
+    date_end: endDate,
   };
   const url = `${reactionBaseUrl}/apps/${appId}/reservations`;
   const requestOptions = {
@@ -128,7 +128,7 @@ const getReservesFromApi = async (id) => {
   const appId = await getAppData();
   const url = `${reactionBaseUrl}/apps/${appId}/reservations?item_id=${id}`;
   const result = await fetch(`${url}`);
-  let reserves = await result.json();
+  const reserves = await result.json();
   return reserves;
 }
 
@@ -142,7 +142,15 @@ const createComments = (commentContainer, commentStore) => {
   });
 };
 
-
+const createReservations = (reserveContainer, reserveStore) => {
+  reserveStore.forEach((reserve, id) => {
+    const listElement = document.createElement('li');
+    const reserveCount = document.getElementById('reserve-count');
+    reserveCount.textContent = `${reserveStore.length}`;
+    listElement.textContent = ` ${reserve.date_start} - ${reserve.date_end} by ${reserve.username}`;
+    reserveContainer.appendChild(listElement);
+  });
+}
 
 const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   commentBtn.addEventListener('click', async (e) => {
@@ -255,7 +263,7 @@ const createReserveBox = async (reserveBtn, pokemons) => {
       reserveContainer.innerHTML = '';
       const reserves = await getReservesFromApi(pokemons[id].id);
       reserveStore = [...reserves];
-      // createComments(reserveContainer, commentStore);
+      createReservations(reserveContainer, reserveStore);
     });
   });
 };
