@@ -26,7 +26,6 @@ const getAppData = async () => {
     },
   };
   const result = await fetch(`${reactionBaseUrl}/apps/`, requestOptions);
-  // const contentType = result.headers.get('content-type');
   const dataText = await result.text();
 
   const data = dataText;
@@ -70,7 +69,7 @@ const addReaction = async (reactionBtn) => {
   });
 };
 const closePopUp = (closeCommentBtn, overLay) => {
-   popUpBox.classList.remove('goBackPopUp');
+  popUpBox.classList.remove('goBackPopUp');
   closeCommentBtn.addEventListener('click', () => {
     popUpBox.classList.remove('hidePopUp');
     popUpBox.classList.add('goBackPopUp');
@@ -177,7 +176,7 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
     <div class="col text-center">Base Experience</div>
     <div class="col text-center">${pokemons[id].base_experience}</div>
 </div>
-<h3 class="comment-title text-center">Comments <span id="comment-count">0</span></h3>
+<h3 class="comment-title text-center my-3">Comments <span id="comment-count">0</span></h3>
 <ul class="comments-container text-center">
    
 </ul>
@@ -218,7 +217,7 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
 const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
   reserveBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
-    popUpBox.classList.remove('hidePopUp');
+    popUpBox.classList.add('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
     <i class="fa-solid fa-xmark close-reserve-btn"></i>
@@ -233,7 +232,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
     <div class="col text-center">Base Experience</div>
     <div class="col text-center">${pokemons[id].base_experience}</div>
 </div>
-<h3 class="comment-title text-center">Reservations <span id="reserve-count">0</span></h3>
+<h3 class="comment-title text-center my-3">Reservations <span id="reserve-count">0</span></h3>
 <ul class="reserve-container text-center">
    
 </ul>
