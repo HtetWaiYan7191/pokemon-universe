@@ -124,6 +124,14 @@ const getCommentsFromApi = async (id) => {
   return comments;
 };
 
+const getReservesFromApi = async (id) => {
+  const appId = await getAppData();
+  const url = `${reactionBaseUrl}/apps/${appId}/reservations?item_id=${id}`;
+  const result = await fetch(`${url}`);
+  let reserves = await result.json();
+  return reserves;
+}
+
 const createComments = (commentContainer, commentStore) => {
   commentStore.forEach((comment, id) => {
     const listElement = document.createElement('li');
@@ -133,6 +141,8 @@ const createComments = (commentContainer, commentStore) => {
     commentContainer.appendChild(listElement);
   });
 };
+
+
 
 const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   commentBtn.addEventListener('click', async (e) => {
@@ -238,14 +248,13 @@ const createReserveBox = async (reserveBtn, pokemons) => {
       const userName = userNameInput.value.trim();
       const startDate = startDateInput.value;
       const endDate = endDateInput.value;
-      console.log([userName, startDate, endDate])
       const result = await sendReservesToApi(userName, startDate, endDate, e.target.id);
-      // const result = await sendCommentsToApi(userName, userComment, e.target.id);
-      // userNameInput.value = '';
-      // userCommentInput.value = '';
-      // reserveContainer.innerHTML = '';
-      // const comments = await getCommentsFromApi(pokemons[id].id);
-      // commentStore = [...comments];
+      userNameInput.value = '';
+      startDateInput.value = '';
+      endDateInput.value = '';
+      reserveContainer.innerHTML = '';
+      const reserves = await getReservesFromApi(pokemons[id].id);
+      reserveStore = [...reserves];
       // createComments(reserveContainer, commentStore);
     });
   });
