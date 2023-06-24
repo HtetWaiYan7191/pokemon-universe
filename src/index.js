@@ -11,7 +11,7 @@ const pokemonCardsContainer = document.querySelector('.pokemon-cards-container')
 const popUpBox = document.querySelector('.pop-up-box');
 const commentStore = [];
 const reserveStore = [];
-popUpBox.classList.add('hidePopUp');
+// popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 let gameId;
 
@@ -70,9 +70,11 @@ const addReaction = async (reactionBtn) => {
   });
 };
 const closePopUp = (closeCommentBtn, overLay) => {
+   popUpBox.classList.remove('goBackPopUp');
   closeCommentBtn.addEventListener('click', () => {
-    popUpBox.classList.add('hidePopUp');
-    overLay.classList.add('hidePopUp');
+    popUpBox.classList.remove('hidePopUp');
+    popUpBox.classList.add('goBackPopUp');
+    overLay.classList.add('hideOverlay');
   });
 };
 
@@ -160,7 +162,7 @@ const createReservations = (reserveContainer, reserveStore) => {
 const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   commentBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
-    popUpBox.classList.remove('hidePopUp');
+    popUpBox.classList.add('hidePopUp');
     popUpBox.innerHTML = `
     <div class="icon-container text-end">
     <i class="fa-solid fa-xmark close-comment-btn"></i>
