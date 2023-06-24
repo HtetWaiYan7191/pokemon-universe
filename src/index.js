@@ -152,7 +152,7 @@ const createReservations = (reserveContainer, reserveStore) => {
     const listElement = document.createElement('li');
     const reserveCount = document.getElementById('reserve-count');
     reserveCount.textContent = `${reserveStore.length}`;
-    listElement.innerHTML = `${reserve.date_start}- ${reserve.date_end} by ${reserve.username}`;
+    listElement.innerHTML = `Start Date - ${reserve.date_start} || End Date - ${reserve.date_end} By ${reserve.username}`;
     reserveContainer.appendChild(listElement);
   });
 };
@@ -231,7 +231,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
     <div class="col text-center">Base Experience</div>
     <div class="col text-center">${pokemons[id].base_experience}</div>
 </div>
-<h3 class="comment-title text-center">Reservations<span id="reserve-count">0</span></h3>
+<h3 class="comment-title text-center">Reservations <span id="reserve-count">0</span></h3>
 <ul class="reserve-container text-center">
    
 </ul>
@@ -240,7 +240,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
     <input type="text" name="user-name" placeholder="Your Name" id="user-name">
     <input type="date" name="start-date" placeholder="Start Date" id="start-date">
     <input type="date" name="end-date" placeholder="End Date" id="end-date">
-    <button class="reserve-button" id="reserve-btn">Reserve</button>
+    <button class="reserve-button my-3" id="reserve-btn">Reserve</button>
 </div>
     `;
     const overLay = document.createElement('div');

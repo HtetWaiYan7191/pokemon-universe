@@ -126,24 +126,24 @@ i {
     z-index: 8;
 }
 
-.comment-btn, .reserve-btn, .form-container #comment-btn{
+.comment-btn, .reserve-btn, .form-container #comment-btn, .form-container #reserve-btn{
     background-color:#c6ffdd;
     border-radius: 12px;
     padding: 5px;
 }
 
-.form-container #comment-btn {
+.form-container #comment-btn, .form-container #reserve-btn {
     width: 35%;
     background-color:#F6FFA6;
 }
 
-
-
-
-
 button {
     border: none    ;
     box-shadow: 0 3px 5px #B31312;
+}
+
+button:hover {
+    background-color:#F6FFA6;
 }
 
 button:active {
@@ -162,7 +162,7 @@ button:active {
     color: red;
 }
 
-.form-container #user-name, .form-container #user-comment {
+.form-container #user-name, .form-container #user-comment, .form-container #start-date, .form-container #end-date {
     background-color:#F8E8EE;
     margin-top: 7px;
     border-radius: 12px;
@@ -176,16 +176,17 @@ button:active {
     color: var(--dark-color);
 }
 
-.comments-container li {
+.comments-container li, .reserve-container li {
     font-size: 18px;
+    font-weight: 600;
 }
 
-.comments-container li:nth-child(even) {
+.comments-container li:nth-child(even), .reserve-container li:nth-child(even) {
     font-size: 18px;
     color:#dd1616;
 }
 
-.comments-container li:nth-child(odd) {
+.comments-container li:nth-child(odd), .reserve-container li:nth-child(odd) {
     font-size: 18px;
     color:#E86A33;
 }
