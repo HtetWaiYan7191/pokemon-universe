@@ -243,7 +243,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
     popUpBox.insertAdjacentElement('afterend', overLay);
     const reserveContainer = document.querySelector('.reserve-container');
 
-    // createComments(reserveContainer, commentStore);
+    createReservations(reserveContainer, reserveStore);
 
     const closeReserveBtn = document.querySelector('.close-reserve-btn');
     closePopUp(closeReserveBtn, overLay);
