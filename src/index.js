@@ -64,7 +64,7 @@ const addReaction = async (reactionBtn) => {
     const result = await fetch(`${url}`, requestOptions);
     const reactionNumbersStr = await getReaction();
     const reactionNumbers = JSON.parse(reactionNumbersStr);
-    const currentId = e.target.id - 1;
+    const currentId = reactionNumbers.length - 1;
     e.target.nextElementSibling.textContent = `${reactionNumbers[currentId].likes}`;
     e.target.classList.remove('fa-bounce');
   });
