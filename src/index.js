@@ -4,7 +4,7 @@
 import './style.css';
 import getAllPokemons from './modules/getAllPokemons.js';
 
-const pokemonsNumbers = 10;
+const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi';
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
@@ -130,7 +130,7 @@ const getReservesFromApi = async (id) => {
   const result = await fetch(`${url}`);
   const reserves = await result.json();
   return reserves;
-}
+};
 
 const createComments = (commentContainer, commentStore) => {
   commentStore.forEach((comment, id) => {
@@ -150,7 +150,7 @@ const createReservations = (reserveContainer, reserveStore) => {
     listElement.textContent = ` ${reserve.date_start} - ${reserve.date_end} by ${reserve.username}`;
     reserveContainer.appendChild(listElement);
   });
-}
+};
 
 const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   commentBtn.addEventListener('click', async (e) => {
@@ -270,7 +270,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
 
 async function createPokemonCard(pokemon) {
   pokemonCardsContainer.innerHTML += `
-    <div class="col-3">
+    <div class="col-3 pokemon-card">
             <figure class="image-container text-center">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png" class="pokemon-image" alt="${pokemon.name}">
             </figure>
@@ -283,11 +283,11 @@ async function createPokemonCard(pokemon) {
                     <span class="reaction-count"></span>
                 </div>
             </div>
-            <div class="button-container">
-                <button class="m-2 w-100 comment-btn" id=${pokemon.id}>Comments</button>
+            <div class="button-container text-center">
+                <button class="m-2 w-50  comment-btn" id=${pokemon.id}>Comments</button>
             </div>
-            <div class="button-container">
-                <button class="m-2 w-100 reserve-btn" id=${pokemon.id}>Reservations</button>
+            <div class="button-container text-center">
+                <button class="m-2 w-50  reserve-btn" id=${pokemon.id}>Reservations</button>
             </div>   
         </div>
     `;
