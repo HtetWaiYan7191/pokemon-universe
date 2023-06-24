@@ -183,7 +183,7 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
 <div class="form-container d-flex flex-column w-50 mx-auto">
     <input type="text" name="user-name" placeholder="Your Name" id="user-name">
     <textarea name="user-comment" id="user-comment" cols="15" rows="5" placeholder="Your Comments"></textarea>
-    <button class="comment-button" id="comment-btn">Comment</button>
+    <button class="comment-button my-2 px-3" id="comment-btn">Comment</button>
 </div>
     `;
     const overLay = document.createElement('div');
