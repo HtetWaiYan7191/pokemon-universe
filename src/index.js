@@ -169,20 +169,20 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemons[id].id}.png" alt ="${pokemons[id].name}" class="pop-up-image">
 </figure>
 <h3 class="text-center pop-up-title">${pokemons[id].name}</h3>
-<div class="row row-cols-2 mx-auto text-container">
+<div class="row row-cols-2 mx-auto text-container my-4">
     <div class="col text-center">Main Ability</div>
     <div class="col text-center">${pokemons[id].abilities[0].ability.name}</div>
     <div class="col text-center">Base Experience</div>
     <div class="col text-center">${pokemons[id].base_experience}</div>
 </div>
-<h3 class="comment-title text-center">Comments<span id="comment-count">0</span></h3>
+<h3 class="comment-title text-center">Comments <span id="comment-count">0</span></h3>
 <ul class="comments-container text-center">
    
 </ul>
 <h3 class="text-center">Add a Comment</h3>
 <div class="form-container d-flex flex-column w-50 mx-auto">
     <input type="text" name="user-name" placeholder="Your Name" id="user-name">
-    <textarea name="user-comment" id="user-comment" cols="15" rows="10" placeholder="Your Comments"></textarea>
+    <textarea name="user-comment" id="user-comment" cols="15" rows="5" placeholder="Your Comments"></textarea>
     <button class="comment-button" id="comment-btn">Comment</button>
 </div>
     `;
