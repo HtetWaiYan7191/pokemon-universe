@@ -142,7 +142,7 @@ const createComments = (commentContainer, commentStore) => {
     const listElement = document.createElement('li');
     const commentCount = document.getElementById('comment-count');
     commentCount.textContent = `${commentStore.length}`;
-    listElement.textContent = `${comment.creation_date} ${comment.username} ${comment.comment}`;
+    listElement.textContent = `${comment.creation_date} || "${comment.comment}" By ${comment.username} `;
     commentContainer.appendChild(listElement);
   });
 };
@@ -152,7 +152,7 @@ const createReservations = (reserveContainer, reserveStore) => {
     const listElement = document.createElement('li');
     const reserveCount = document.getElementById('reserve-count');
     reserveCount.textContent = `${reserveStore.length}`;
-    listElement.textContent = ` ${reserve.date_start} - ${reserve.date_end} by ${reserve.username}`;
+    listElement.innerHTML = `${reserve.date_start}- ${reserve.date_end} by ${reserve.username}`;
     reserveContainer.appendChild(listElement);
   });
 };

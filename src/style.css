@@ -139,6 +139,8 @@ i {
 
 
 
+
+
 button {
     border: none    ;
     box-shadow: 0 3px 5px #B31312;
@@ -172,6 +174,20 @@ button:active {
 .form-container #user-name:focus, .form-container #user-comment:focus {
     background-color: #F6FFA6;
     color: var(--dark-color);
+}
+
+.comments-container li {
+    font-size: 18px;
+}
+
+.comments-container li:nth-child(even) {
+    font-size: 18px;
+    color:#dd1616;
+}
+
+.comments-container li:nth-child(odd) {
+    font-size: 18px;
+    color:#E86A33;
 }
 
 ::placeholder {
