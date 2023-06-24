@@ -99,7 +99,7 @@ i {
   z-index: 10;
   width: 60%;
   position: fixed;
-  top: 50%;
+  top: -100%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0 auto;
@@ -162,8 +162,19 @@ button:active {
   box-shadow: 0 0 0;
 }
 
-.hidePopUp {
+.hideOverlay {
   display: none;
+}
+
+.hidePopUp {
+  transform: translate(-50%, -50%);
+  top: 50%; 
+  transition: all 0.6s ease;
+}
+
+.goBackPopUp {
+  top: -100%;
+  transition: all 0.6s ease;
 }
 
 .reaction-count {
