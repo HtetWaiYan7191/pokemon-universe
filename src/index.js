@@ -17,15 +17,15 @@ let gameId;
 
 const heartAnimation = (reactionBtn) => {
   reactionBtn.addEventListener('mouseover', (e) => {
-   e.target.classList.add('fa-shake');
-   e.target.classList.add('regular-red');
+    e.target.classList.add('fa-shake');
+    e.target.classList.add('regular-red');
   });
 
   reactionBtn.addEventListener('mouseout', (e) => {
     e.target.classList.remove('regular-red');
     e.target.classList.remove('fa-shake');
   });
-}
+};
 const getAppData = async () => {
   if (gameId) {
     return gameId;
