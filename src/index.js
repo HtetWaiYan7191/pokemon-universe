@@ -45,6 +45,10 @@ const getReaction = async () => {
 
 const addReaction = async (reactionBtn) => {
   reactionBtn.addEventListener('click', async (e) => {
+    e.target.classList.add('fa-bounce');
+    e.target.classList.remove('fa-regular');
+    e.target.classList.add('fa-solid');
+    e.target.classList.add('red');
     const id = await getAppData();
     const appId = id;
     const item = { item_id: `${e.target.id}` };
@@ -62,6 +66,7 @@ const addReaction = async (reactionBtn) => {
     const reactionNumbers = JSON.parse(reactionNumbersStr);
     const currentId = e.target.id - 1;
     e.target.nextElementSibling.textContent = `${reactionNumbers[currentId].likes}`;
+    e.target.classList.remove('fa-bounce');
   });
 };
 const closePopUp = (closeCommentBtn, overLay) => {
