@@ -15,6 +15,17 @@ const reserveStore = [];
 let pokemons = [];
 let gameId;
 
+const heartAnimation = (reactionBtn) => {
+  reactionBtn.addEventListener('mouseover', (e) => {
+   e.target.classList.add('fa-shake');
+   e.target.classList.add('regular-red');
+  });
+
+  reactionBtn.addEventListener('mouseout', (e) => {
+    e.target.classList.remove('regular-red');
+    e.target.classList.remove('fa-shake');
+  });
+}
 const getAppData = async () => {
   if (gameId) {
     return gameId;
@@ -44,6 +55,7 @@ const getReaction = async () => {
 
 const addReaction = async (reactionBtn) => {
   reactionBtn.addEventListener('click', async (e) => {
+    e.target.classList.remove('fa-shake');
     e.target.classList.add('fa-bounce');
     e.target.classList.remove('fa-regular');
     e.target.classList.add('fa-solid');
@@ -300,6 +312,7 @@ async function createPokemonCard(pokemon) {
 
   const reactionBtns = document.querySelectorAll('.fa-heart');
   reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
+  reactionBtns.forEach((reactionBtn) => heartAnimation(reactionBtn));
 
   const commentBtns = document.querySelectorAll('.comment-btn');
   commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons, commentStore));
