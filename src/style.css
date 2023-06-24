@@ -24,7 +24,7 @@ body {
 }
 
 header h1 {
-    font-size: 48px;
+    font-size: 50px;
     text-align: center;
     margin: 2rem auto;
     font-weight: 700;
@@ -69,6 +69,8 @@ main {
 
 .caption figcaption, .pop-up-title {
     text-transform: capitalize;
+    font-size: 35px;
+    color: rgba(156,252,248,1);
 }
 
 .pop-up-box {
@@ -95,6 +97,12 @@ main {
     top: 0;
     left: 0;
     z-index: 8;
+}
+
+.comment-btn, .reserve-btn{
+    background-color:#c6ffdd;
+    border-radius: 12px;
+    padding: 3px;
 }
 
 .hidePopUp {
