@@ -93,12 +93,26 @@ const sendCommentsToApi = async (userName, userComment, id) => {
   return data;
 };
 
-const sendReservesToApi = async () => {
+const sendReservesToApi = async (userName, startDate, endDate, id) => {
   const appId = await getAppData();
   const reserveData = {
-
+    item_id: id,
+    username: userName,
+    date_start: startDate,
+    date_end: endDate
   };
   const url = `${reactionBaseUrl}/apps/${appId}/reservations`;
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(reserveData),
+  };
+
+  const result = await fetch(`${url}`, requestOptions);
+  const data = await result.text();
+  return data;
 };
 
 const getCommentsFromApi = async (id) => {
@@ -203,7 +217,7 @@ const createReserveBox = async (reserveBtn, pokemons) => {
     <input type="text" name="user-name" placeholder="Your Name" id="user-name">
     <input type="date" name="start-date" placeholder="Start Date" id="start-date">
     <input type="date" name="end-date" placeholder="End Date" id="end-date">
-    <button class="reserve-button" id="reserve-btn">Comment</button>
+    <button class="reserve-button" id="reserve-btn">Reserve</button>
 </div>
     `;
     const overLay = document.createElement('div');
@@ -217,21 +231,23 @@ const createReserveBox = async (reserveBtn, pokemons) => {
     closePopUp(closeReserveBtn, overLay);
 
     const reserveBtn = document.getElementById('reserve-btn');
-    // reserveBtn.addEventListener('click', async () => {
-    //   const userNameInput = document.getElementById('user-name');
-    //   const startDateInput = document.getElementById('start-date');
-    //   const endDateInput = document.getElementById('end-date');
-    //   const userName = userNameInput.value.trim();
-    //   const startDate = startDateInput.value;
-    //   const endDate = endDateInput.value;
-    //   const result = await sendCommentsToApi(userName, userComment, e.target.id);
-    //   userNameInput.value = '';
-    //   userCommentInput.value = '';
-    //   reserveContainer.innerHTML = '';
-    //   const comments = await getCommentsFromApi(pokemons[id].id);
-    //   commentStore = [...comments];
-    //   createComments(reserveContainer, commentStore);
-    // });
+    reserveBtn.addEventListener('click', async () => {
+      const userNameInput = document.getElementById('user-name');
+      const startDateInput = document.getElementById('start-date');
+      const endDateInput = document.getElementById('end-date');
+      const userName = userNameInput.value.trim();
+      const startDate = startDateInput.value;
+      const endDate = endDateInput.value;
+      console.log([userName, startDate, endDate])
+      const result = await sendReservesToApi(userName, startDate, endDate, e.target.id);
+      // const result = await sendCommentsToApi(userName, userComment, e.target.id);
+      // userNameInput.value = '';
+      // userCommentInput.value = '';
+      // reserveContainer.innerHTML = '';
+      // const comments = await getCommentsFromApi(pokemons[id].id);
+      // commentStore = [...comments];
+      // createComments(reserveContainer, commentStore);
+    });
   });
 };
 
