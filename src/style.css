@@ -51,8 +51,7 @@ main {
     border: 1px solid var(--white-color);
     border-radius: 16px;
     transform: scale(1.1);
-    box-shadow: 0 3px 5px var(--box-shadow-color);
-    /* box-shadow: 0 0 20px var(--box-shadow-color); */
+    box-shadow: 0 3px 5px #B31312;
     outline: 1px solid var(--box-shadow-color);
     transition: all 0.6s ease-out;
 }
@@ -67,8 +66,20 @@ main {
 }
 .text-container {
     width: 80%;
+    align-items: center;
 }
 
+.text-container > .col:nth-child(2n-1) {
+    font-size: 20px;
+    color: var(--box-shadow-color);
+  }
+
+  .text-container > .col:nth-child(even) {
+    font-size: 20px;
+    color: red;
+  }
+  
+  
 i {
     cursor: pointer;
 }
@@ -79,7 +90,8 @@ i {
 }
 
 .pop-up-box {
-    background-color: #fff;
+    border-radius: 14px;
+    background-image: linear-gradient( 95.2deg, rgba(173,252,234,1) 26.8%, rgba(192,229,246,1) 64% );
     z-index: 10;
     width: 60%;
     position: fixed;
@@ -91,8 +103,18 @@ i {
     padding-bottom: 1rem;
 }
 
+.pop-up-title, .comment-title, h3 {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--box-shadow-color);
+}
+
 .fa-xmark {
     padding-right: 15px;
+}
+
+.fa-xmark:hover {
+    color: red;
 }
 .overlay {
     position: fixed;
@@ -128,4 +150,23 @@ button:active {
 }
 .red {
     color: red;
+}
+
+.form-container #user-name, .form-container #user-comment {
+    background-color:#F8E8EE;
+    margin: 5px ;
+    border-radius: 12px;
+    padding: 5px 7px;
+    color: #9376E0;
+    border-color:  #F3BCC8;
+}
+
+.form-container #user-name:focus, .form-container #user-comment:focus {
+    background-color: #F6FFA6;
+    color: var(--dark-color);
+}
+
+::placeholder {
+    padding: 10px;  
+    color: #9376E0;
 }
