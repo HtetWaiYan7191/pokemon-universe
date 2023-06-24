@@ -108,3 +108,10 @@ main {
 .hidePopUp {
     display: none;
 }
+.reaction-count {
+    font-size: 20px;
+    color: var(--white-color);
+}
+.red {
+    color: red;
+}
