@@ -43,6 +43,7 @@ main {
 .pokemon-card {
     position: relative;
     z-index: 1;
+    padding: 10px;
 }
 
 .pokemon-card:hover {
@@ -50,7 +51,8 @@ main {
     border: 1px solid var(--white-color);
     border-radius: 16px;
     transform: scale(1.1);
-    box-shadow: 0 0 10px var(--box-shadow-color);
+    box-shadow: 0 3px 5px var(--box-shadow-color);
+    /* box-shadow: 0 0 20px var(--box-shadow-color); */
     outline: 1px solid var(--box-shadow-color);
     transition: all 0.6s ease-out;
 }
@@ -67,6 +69,9 @@ main {
     width: 80%;
 }
 
+i {
+    cursor: pointer;
+}
 .caption figcaption, .pop-up-title {
     text-transform: capitalize;
     font-size: 35px;
@@ -103,6 +108,15 @@ main {
     background-color:#c6ffdd;
     border-radius: 12px;
     padding: 3px;
+}
+button {
+    border: none    ;
+    box-shadow: 0 3px 5px #B31312;
+}
+
+button:active {
+    transform: scale(0.9);
+    box-shadow: 0 0px 0px ;
 }
 
 .hidePopUp {
