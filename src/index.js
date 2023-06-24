@@ -279,7 +279,7 @@ async function createPokemonCard(pokemon) {
             <figure class="image-container text-center">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png" class="pokemon-image" alt="${pokemon.name}">
             </figure>
-            <div class="caption d-flex justify-content-around">
+            <div class="caption d-flex justify-content-around align-items-center">
                 <figcaption>
                     ${pokemon.name}
                 </figcaption>
