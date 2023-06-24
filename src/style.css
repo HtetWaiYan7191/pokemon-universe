@@ -186,6 +186,10 @@ button:active {
   color: var(--white-color);
 }
 
+.regular-red {
+  color: red;
+}
+
 .red {
   color: red;
 }
