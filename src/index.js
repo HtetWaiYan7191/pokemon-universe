@@ -10,7 +10,7 @@ const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
 const popUpBox = document.querySelector('.pop-up-box');
 const commentStore = [];
-let reserveStore = [];
+const reserveStore = [];
 popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 let gameId;
@@ -208,7 +208,7 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   });
 };
 
-const createReserveBox = async (reserveBtn, pokemons) => {
+const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
   reserveBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
     popUpBox.classList.remove('hidePopUp');
@@ -299,7 +299,7 @@ async function createPokemonCard(pokemon) {
   commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons, commentStore));
 
   const reserveBtns = document.querySelectorAll('.reserve-btn');
-  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons));
+  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons, reserveStore));
 }
 
 const fetchPokemons = async () => {
