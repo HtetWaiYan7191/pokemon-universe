@@ -339,7 +339,6 @@ function addScrollAnimation() {
 
   const meText = document.querySelector('#me-text');
 
-  // Adjust the value (500 in this example) based on when you want the animation to start
   const screenHeight = window.innerHeight;
   if (position - screenHeight <= 0) {
     element.classList.add('leftToRight');
