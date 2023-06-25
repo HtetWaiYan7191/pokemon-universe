@@ -321,12 +321,23 @@ async function createPokemonCard(pokemon) {
   reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons, reserveStore));
 }
 
+const fetchPokemons = async () => {
+  for (let i = 1; i <= pokemonsNumbers; i += 1) {
+    pokemons = await getAllPokemons(i, pokemons, baseUrl);
+  }
+  pokemons.forEach((pokemon) => createPokemonCard(pokemon));
+};
+
+await fetchPokemons();
+
+const pokemonCards = document.querySelectorAll('.pokemon-card');
+pokemonCards.forEach((pokemonCard) => pokemonCard.classList.add('leftToRightCard'));
+
 function addScrollAnimation() {
   const element = document.querySelector('#contact-text');
   const position = element.getBoundingClientRect().top;
 
   const meText = document.querySelector('#me-text');
-  const meTextPosition = meText.getBoundingClientRect().top;
 
   // Adjust the value (500 in this example) based on when you want the animation to start
   const screenHeight = window.innerHeight;
@@ -335,14 +346,5 @@ function addScrollAnimation() {
     meText.classList.add('rightToLeft');
   }
 }
-
-const fetchPokemons = async () => {
-  for (let i = 1; i <= pokemonsNumbers; i += 1) {
-    pokemons = await getAllPokemons(i, pokemons, baseUrl);
-  }
-  pokemons.forEach((pokemon) => createPokemonCard(pokemon));
-};
-
-fetchPokemons();
 
 window.addEventListener('scroll', addScrollAnimation);
