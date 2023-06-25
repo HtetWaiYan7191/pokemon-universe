@@ -258,3 +258,33 @@ footer {
 .social-links-container i {
   font-size: 2rem;
 }
+
+.leftToRight {
+  position: relative;
+  animation: leftToRight 1s ease-out  ;
+  transition: all 0.4s ease;
+}
+
+.rightToLeft {
+  position: relative;
+  animation: rightToLeft 1s ease-out;
+  transition: all 0.4s ease;
+}
+
+@keyframes leftToRight {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes rightToLeft {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 0;
+  }
+}
