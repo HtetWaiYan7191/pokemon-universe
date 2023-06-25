@@ -1,0 +1,26 @@
+import getAppData from './getAppData';
+import { reactionBaseUrl } from './variables';
+
+const sendCommentsToApi = async (userName, userComment, id) => {
+  const appId = await getAppData();
+  const userData = {
+    item_id: id,
+    username: userName,
+    comment: userComment,
+  };
+
+  const url = `${reactionBaseUrl}/apps/${appId}/comments`;
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+    },
+    body: JSON.stringify(userData),
+  };
+
+  const result = await fetch(`${url}`, requestOptions);
+  const data = await result.text();
+  return data;
+};
+
+export default sendCommentsToApi;
