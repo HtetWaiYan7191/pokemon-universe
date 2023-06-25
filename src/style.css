@@ -1,3 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,500;0,600;0,700;1,200;1,400;1,500;1,700&family=Rajdhani:wght@300;400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&family=Space+Mono&family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Kalam:wght@300;400;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,500;0,600;0,700;1,200;1,400;1,500;1,700&family=Rajdhani:wght@300;400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&family=Space+Mono&family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Kalam', cursive;
+}
+
+:root {
+  --card-color: #e1aeff;
+  --white-color: #fff;
+  --dark-color: #333;
+  --box-shadow-color: #dd58d6;
+}
+
 body {
-    background-color: bisque;
+  background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+  background-size: contain;
+  width: 100%;
+  height: 100vh;
+}
+
+header h1 {
+  font-size: 5rem;
+  text-align: center;
+  margin: 2rem auto;
+  font-weight: 700;
+  font-family: 'Amatic SC', cursive;
+  background-image: linear-gradient(to right, #33001b, #ff0084);
+
+  /* background-image: linear-gradient(109.6deg, rgba(156, 252, 248, 1) 11.2%, rgba(110, 123, 251, 1) 91.1%); */
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+main {
+  width: 80%;
+  margin-top: 20px;
+}
+
+.pokemon-card {
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+}
+
+.pokemon-card:hover {
+  background-color: var(--card-color);
+  border: 1px solid var(--white-color);
+  border-radius: 16px;
+  transform: scale(1.1);
+  box-shadow: 0 3px 5px #b31312;
+  outline: 1px solid var(--box-shadow-color);
+  transition: all 0.6s ease-out;
+}
+
+.pokemon-image {
+  width: 100px;
+  height: 100px;
+}
+
+.pop-up-image {
+  width: 100px;
+  height: 100px;
+}
+
+.text-container {
+  width: 80%;
+  align-items: center;
+}
+
+.text-container > .col:nth-child(2n-1) {
+  font-size: 20px;
+  color: var(--box-shadow-color);
+}
+
+.text-container > .col:nth-child(even) {
+  font-size: 20px;
+  color: red;
+}
+
+i {
+  cursor: pointer;
+}
+
+.caption figcaption,
+.pop-up-title {
+  text-transform: capitalize;
+  font-size: 35px;
+  color: rgba(156, 252, 248, 1);
+}
+
+.pop-up-box {
+  border-radius: 14px;
+  background-image: linear-gradient(95.2deg, rgba(173, 252, 234, 1) 26.8%, rgba(192, 229, 246, 1) 64%);
+  z-index: 10;
+  width: 50%;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pop-up-title,
+.comment-title,
+h3 {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--box-shadow-color);
+}
+
+.fa-xmark {
+  padding-right: 15px;
+}
+
+.fa-xmark:hover {
+  color: red;
+}
+
+.overlay {
+  position: fixed;
+  background-color: rgba(59, 58, 58, 0.7);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 8;
+}
+
+.comment-btn,
+.reserve-btn,
+.form-container #comment-btn,
+.form-container #reserve-btn {
+  background-color: #c6ffdd;
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.form-container #comment-btn,
+.form-container #reserve-btn {
+  width: 40%;
+  background-color: #c6ffdd;
+}
+
+.form-container #reserve-btn:hover,
+.form-container #comment-btn:hover {
+  background-color: #f6ffa6;
+}
+
+button {
+  border: none;
+  box-shadow: 0 3px 5px #b31312;
+}
+
+button:hover {
+  background-color: #f6ffa6;
+}
+
+button:active {
+  transform: scale(0.9);
+  box-shadow: 0 0 0;
+}
+
+.hideOverlay {
+  display: none;
+}
+
+.hidePopUp {
+  transform: translate(-50%, -50%);
+  top: 50%;
+  transition: all 0.6s ease;
+}
+
+.goBackPopUp {
+  top: -100%;
+  transition: all 0.6s ease;
+}
+
+.reaction-count {
+  font-size: 20px;
+  color: var(--white-color);
+}
+
+.regular-red {
+  color: red;
+}
+
+.red {
+  color: red;
+}
+
+.form-container #user-name,
+.form-container #user-comment,
+.form-container #start-date,
+.form-container #end-date {
+  background-color: #f8e8ee;
+  margin-top: 7px;
+  border-radius: 12px;
+  padding: 5px 7px;
+  color: #9376e0;
+  border-color: #f3bcc8;
+}
+
+.form-container #user-name:focus,
+.form-container #user-comment:focus {
+  background-color: #f6ffa6;
+  color: var(--dark-color);
+}
+
+.comments-container li,
+.reserve-container li {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.comments-container li:nth-child(even),
+.reserve-container li:nth-child(even) {
+  font-size: 18px;
+  color: #dd1616;
+}
+
+.comments-container li:nth-child(odd),
+.reserve-container li:nth-child(odd) {
+  font-size: 18px;
+  color: #e86a33;
+}
+
+::placeholder {
+  padding: 10px;
+  color: #9376e0;
+}
+
+footer {
+  width: 100%;
+  background-color: var(--card-color);
+  padding: 0.3rem 0.3rem;
+}
+
+.contact-me-container span {
+  font-size: 2.7rem;
+  color: #b31312;
+}
+
+.social-links-container {
+  width: 25%;
+  margin: 10px auto;
+}
+
+.social-links-container a {
+  color: inherit;
+}
+
+.social-links-container i {
+  font-size: 2rem;
+}
+
+.social-links-container i:hover {
+  color: #b31312;
+  transform: scale(1.2);
+  transition: all 0.4s ease;
+}
+
+.leftToRight {
+  position: relative;
+  animation: leftToRight 1s ease-out;
+  transition: all 0.4s ease;
+}
+
+.rightToLeft {
+  position: relative;
+  animation: rightToLeft 1s ease-out;
+  transition: all 0.4s ease;
+}
+
+.leftToRightCard {
+  animation: leftToRightCard 1s ease-out;
+  transition: all 0.4s ease;
+}
+
+@keyframes leftToRight {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 0;
+    color: #b31312;
+  }
+}
+
+@keyframes rightToLeft {
+  0% {
+    right: -100%;
+  }
+
+  100% {
+    right: 0;
+    color: #b31312;
+  }
+}
+
+@keyframes leftToRightCard {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 0;
+  }
 }
