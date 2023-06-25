@@ -268,7 +268,7 @@ footer {
 
 .leftToRight {
   position: relative;
-  animation: leftToRight 1s ease-out  ;
+  animation: leftToRight 1s ease-out;
   transition: all 0.4s ease;
 }
 
@@ -278,11 +278,16 @@ footer {
   transition: all 0.4s ease;
 }
 
+.leftToRightCard {
+  animation: leftToRightCard 1s ease-out;
+  transition: all 0.4s ease;
+}
+
 @keyframes leftToRight {
   0% {
     left: -100%;
-    
   }
+
   100% {
     left: 0;
     color: #b31312;
@@ -293,8 +298,19 @@ footer {
   0% {
     right: -100%;
   }
+
   100% {
     right: 0;
     color: #b31312;
+  }
+}
+
+@keyframes leftToRightCard {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 0;
   }
 }
