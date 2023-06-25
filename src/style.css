@@ -244,6 +244,7 @@ footer {
 
 .contact-me-container span {
   font-size: 2.7rem;
+  color: #b31312;
 }
 
 .social-links-container {
@@ -257,6 +258,12 @@ footer {
 
 .social-links-container i {
   font-size: 2rem;
+}
+
+.social-links-container i:hover {
+  color: #b31312;
+  transform: scale(1.2);
+  transition: all 0.4s ease;
 }
 
 .leftToRight {
@@ -274,9 +281,11 @@ footer {
 @keyframes leftToRight {
   0% {
     left: -100%;
+    
   }
   100% {
     left: 0;
+    color: #b31312;
   }
 }
 
@@ -286,5 +295,6 @@ footer {
   }
   100% {
     right: 0;
+    color: #b31312;
   }
 }
