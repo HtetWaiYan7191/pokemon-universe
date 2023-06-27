@@ -1,4 +1,4 @@
-import { reactionBaseUrl, getGameId } from "./getAppData";
+import { reactionBaseUrl, getGameId } from './getAppData';
 
 const getReaction = async () => {
   const appId = await getGameId();
