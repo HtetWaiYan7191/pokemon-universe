@@ -12,7 +12,7 @@ import sendReservesToApi from './modules/sendReservesToApi';
 import getReservesFromApi from './modules/getReservesFromApi';
 import addReaction from './modules/addReaction';
 import addScrollAnimation from './modules/addScrollAnimation';
-import { popUpBox, reactionBaseUrl, gameId } from './modules/variables';
+import { popUpBox, getGameId } from './modules/getAppData';
 
 const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';

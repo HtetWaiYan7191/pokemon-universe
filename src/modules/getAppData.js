@@ -1,10 +1,7 @@
-import { gameId, reactionBaseUrl } from './variables';
+export const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi';
+export const popUpBox = document.querySelector('.pop-up-box');
 
-const getAppData = async () => {
-  if (gameId) {
-    return gameId;
-  }
-
+export const getAppData = async () => {
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -15,8 +12,19 @@ const getAppData = async () => {
   const dataText = await result.text();
 
   const data = dataText;
-  gameId = data;
   return data;
 };
 
-export default getAppData;
+export const getGameId = async () => {
+  let gameId;
+  const storedGameId = localStorage.getItem('gameId');
+
+  if (storedGameId) {
+    gameId = storedGameId;
+  } else {
+    gameId = await getAppData();
+    localStorage.setItem('gameId', gameId);
+  }
+
+  return gameId;
+};

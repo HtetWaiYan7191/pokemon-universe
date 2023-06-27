@@ -1,4 +1,4 @@
-import { popUpBox } from './variables';
+import { popUpBox } from './getAppData';
 
 const closePopUp = (closeCommentBtn, overLay) => {
   popUpBox.classList.remove('goBackPopUp');

@@ -1,7 +1,7 @@
-import { gameId, reactionBaseUrl } from './variables';
+import { reactionBaseUrl, getGameId } from "./getAppData";
 
 const getReaction = async () => {
-  const appId = gameId;
+  const appId = await getGameId();
   const url = `${reactionBaseUrl}/apps/${appId}/likes`;
   const result = await fetch(`${url}`);
   // const contentType = result.headers.get('content-type');

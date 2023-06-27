@@ -1,7 +1,6 @@
 /*  eslint-disable no-unused-vars */
-import getAppData from './getAppData';
 // otherFile.js
-import { reactionBaseUrl } from './variables';
+import { reactionBaseUrl, getGameId } from './getAppData';
 import getReaction from './getReaction';
 
 const addReaction = async (reactionBtn) => {
@@ -11,9 +10,9 @@ const addReaction = async (reactionBtn) => {
     e.target.classList.remove('fa-regular');
     e.target.classList.add('fa-solid');
     e.target.classList.add('red');
-    const id = await getAppData();
+    const id = await getGameId();
     const appId = id;
-    console.log(appId)
+    console.log(appId);
     const item = { item_id: `${e.target.id}` };
     const url = `${reactionBaseUrl}/apps/${appId}/likes`;
     const requestOptions = {

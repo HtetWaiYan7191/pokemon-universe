@@ -1,8 +1,7 @@
-import getAppData from './getAppData';
-import { reactionBaseUrl } from './variables';
+import { getGameId, reactionBaseUrl } from './getAppData';
 
 const sendReservesToApi = async (userName, startDate, endDate, id) => {
-  const appId = await getAppData();
+  const appId = await getGameId();
   const reserveData = {
     item_id: id,
     username: userName,
