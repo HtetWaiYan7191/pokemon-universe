@@ -84,7 +84,7 @@ Clone this repository to your desired folder:
 <br>
 <code>
   git clone https://github.com/HtetWaiYan7191/pokemon-universe.git
-  cd leaderboard.git
+  cd pokemon-universe.git
 </code>
 
 
