@@ -12,7 +12,7 @@ import sendReservesToApi from './modules/sendReservesToApi';
 import getReservesFromApi from './modules/getReservesFromApi';
 import addReaction from './modules/addReaction';
 import addScrollAnimation from './modules/addScrollAnimation';
-import { popUpBox, getGameId } from './modules/getAppData';
+import { popUpBox, gameId } from './modules/getAppData';
 
 const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
@@ -150,8 +150,9 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
   });
 };
 
-async function createPokemonCard(pokemon) {
-  pokemonCardsContainer.innerHTML += `
+async function createPokemonCard(pokemons) {
+  pokemons.forEach((pokemon) => {
+    pokemonCardsContainer.innerHTML += `
     <div class="col-3 pokemon-card">
             <figure class="image-container text-center">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png" class="pokemon-image" alt="${pokemon.name}">
@@ -173,6 +174,7 @@ async function createPokemonCard(pokemon) {
             </div>   
         </div>
     `;
+  });
 
   const reactionBtns = document.querySelectorAll('.fa-heart');
   reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
@@ -189,7 +191,8 @@ const fetchPokemons = async () => {
   for (let i = 1; i <= pokemonsNumbers; i += 1) {
     pokemons = await getAllPokemons(i, pokemons, baseUrl);
   }
-  pokemons.forEach((pokemon) => createPokemonCard(pokemon));
+  createPokemonCard(pokemons)
+  // pokemons.forEach((pokemon) => createPokemonCard(pokemon));
 };
 
 await fetchPokemons();
