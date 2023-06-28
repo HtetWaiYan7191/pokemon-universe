@@ -6,6 +6,10 @@ const getCommentsFromApi = async (id) => {
   const result = await fetch(`${url}`);
   let comments = await result.text();
   comments = JSON.parse(comments);
+  if (comments.length > 0) {
+    return comments;
+  }
+  comments = [];
   return comments;
 };
 
