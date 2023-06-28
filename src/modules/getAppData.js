@@ -11,8 +11,6 @@ export const getAppData = async () => {
   };
   const result = await fetch(`${reactionBaseUrl}/apps/`, requestOptions);
   const dataText = await result.text();
-
   const data = dataText;
-  console.log(data);
   return data;
 };
