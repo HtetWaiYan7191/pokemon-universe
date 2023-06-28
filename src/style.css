@@ -105,7 +105,6 @@ i {
   margin: 0 auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  overflow-y: scroll;
 }
 
 .pop-up-title,
@@ -224,22 +223,13 @@ button:active {
   margin: 0 auto;
   min-height: 14%;
   overflow-y: scroll;
+  scrollbar-width: none; /* Set the width of the scrollbar */
+  -ms-overflow-style: none;
 }
 
-/* Hide the scrollbar for webkit-based browsers */
-/* .comments-container::-webkit-scrollbar {
-  width: 0.5em;
-  background-color: transparent;
+.comments-container::-webkit-scrollbar {
+  display: none;/* Adjust the width as needed */
 }
-
-.comments-container::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-.comments-container::-webkit-scrollbar-thumb {
-  background-color: transparent;
-} */
-
 
 .comments-container li,
 .reserve-container li {
