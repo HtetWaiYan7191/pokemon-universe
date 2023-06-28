@@ -1,7 +1,7 @@
-import { getGameId, reactionBaseUrl } from './getAppData';
+import { gameId, reactionBaseUrl } from './getAppData';
 
 const sendCommentsToApi = async (userName, userComment, id) => {
-  const appId = await getGameId();
+  const appId = gameId;
   const userData = {
     item_id: id,
     username: userName,

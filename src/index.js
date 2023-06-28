@@ -13,6 +13,8 @@ import getReservesFromApi from './modules/getReservesFromApi';
 import addReaction from './modules/addReaction';
 import addScrollAnimation from './modules/addScrollAnimation';
 import { popUpBox, gameId } from './modules/getAppData';
+import getReaction from './modules/getReaction';
+import showReaction from './modules/showReaction';
 
 const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
@@ -163,7 +165,7 @@ async function createPokemonCard(pokemons) {
                 </figcaption>
                 <div class="reaction">
                     <i class="fa-regular fa-heart" id="${pokemon.id}"></i>
-                    <span class="reaction-count"></span>
+                    <span class="reaction-count" id="${pokemon.id}"></span>
                 </div>
             </div>
             <div class="button-container text-center">
@@ -175,9 +177,13 @@ async function createPokemonCard(pokemons) {
         </div>
     `;
   });
+  const reactionNumbersStr = await getReaction();
+  const reactionNumbers = JSON.parse(reactionNumbersStr);
+  const reactionCounts = document.querySelectorAll('.reaction-count');
+  showReaction(reactionNumbers, reactionCounts);
 
   const reactionBtns = document.querySelectorAll('.fa-heart');
-  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
+  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn, reactionCounts));
   reactionBtns.forEach((reactionBtn) => heartAnimation(reactionBtn));
 
   const commentBtns = document.querySelectorAll('.comment-btn');
@@ -191,7 +197,7 @@ const fetchPokemons = async () => {
   for (let i = 1; i <= pokemonsNumbers; i += 1) {
     pokemons = await getAllPokemons(i, pokemons, baseUrl);
   }
-  createPokemonCard(pokemons)
+  createPokemonCard(pokemons);
   // pokemons.forEach((pokemon) => createPokemonCard(pokemon));
 };
 

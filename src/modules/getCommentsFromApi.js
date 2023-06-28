@@ -1,7 +1,7 @@
-import { getGameId, reactionBaseUrl } from './getAppData';
+import { gameId, reactionBaseUrl } from './getAppData';
 
 const getCommentsFromApi = async (id) => {
-  const appId = await getGameId();
+  const appId = gameId;
   const url = `${reactionBaseUrl}/apps/${appId}/comments?item_id=${id}`;
   const result = await fetch(`${url}`);
   let comments = await result.text();
