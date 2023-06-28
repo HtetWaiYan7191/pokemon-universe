@@ -20,9 +20,6 @@ import { openPopupCard } from './modules/popUp';
 const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
-// const commentStore = await getCommentsFromApi();
-const reserveStore = [];
-// popUpBox.classList.add('hidePopUp');
 let pokemons = [];
 
 const heartAnimation = (reactionBtn) => {
@@ -95,7 +92,8 @@ const createCommentBox = async (commentBtn, pokemons) => {
   });
 };
 
-const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
+const createReserveBox = async (reserveBtn, pokemons) => {
+  openPopupCard();
   reserveBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
     popUpBox.classList.add('hidePopUp');
@@ -130,6 +128,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
     popUpBox.insertAdjacentElement('afterend', overLay);
     const reserveContainer = document.querySelector('.reserve-container');
 
+    let reserveStore = await getReservesFromApi(pokemons[e.target.id - 1].id);
     createReservations(reserveContainer, reserveStore);
 
     const closeReserveBtn = document.querySelector('.close-reserve-btn');
@@ -193,7 +192,7 @@ async function createPokemonCard(pokemons) {
   commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons));
 
   const reserveBtns = document.querySelectorAll('.reserve-btn');
-  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons, reserveStore));
+  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons));
 }
 
 const fetchPokemons = async () => {
