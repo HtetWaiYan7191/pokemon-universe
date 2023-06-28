@@ -220,7 +220,7 @@ button:active {
 .comments-container,
 .reserve-container {
   width: 80%;
-  height: 80px;
+  height: 55px;
   margin: 0 auto;
   min-height: 14%;
   overflow-y: scroll;

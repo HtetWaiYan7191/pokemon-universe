@@ -15,7 +15,7 @@ import addScrollAnimation from './modules/addScrollAnimation';
 import { popUpBox, gameId } from './modules/getAppData';
 import getReaction from './modules/getReaction';
 import showReaction from './modules/showReaction';
-import { openPopupCard } from './modules/popUp';
+import { openPopupCard, closePopupCard } from './modules/popUp';
 
 const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
@@ -93,8 +93,8 @@ const createCommentBox = async (commentBtn, pokemons) => {
 };
 
 const createReserveBox = async (reserveBtn, pokemons) => {
-  openPopupCard();
   reserveBtn.addEventListener('click', async (e) => {
+    openPopupCard();
     const id = e.target.id - 1;
     popUpBox.classList.add('hidePopUp');
     popUpBox.innerHTML = `
