@@ -213,6 +213,29 @@ button:active {
   color: var(--dark-color);
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
+.comments-container,
+.reserve-container {
+  width: 80%;
+  height: 80px;
+  margin: 0 auto;
+  min-height: 14%;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Set the width of the scrollbar */
+  -ms-overflow-style: none;
+}
+
+.comments-container::-webkit-scrollbar {
+  display: none;/* Adjust the width as needed */
+}
+
+.reserve-container::-webkit-scrollbar {
+  display: none;/* Adjust the width as needed */
+}
+
 .comments-container li,
 .reserve-container li {
   font-size: 18px;

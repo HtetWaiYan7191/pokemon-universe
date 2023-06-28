@@ -3,17 +3,24 @@
 
 import './style.css';
 import getAllPokemons from './modules/getAllPokemons.js';
+import createComments from './modules/createComments';
+import closePopUp from './modules/closePopUp';
+import sendCommentsToApi from './modules/sendCommentsToApi';
+import getCommentsFromApi from './modules/getCommentsFromApi';
+import createReservations from './modules/createReservations';
+import sendReservesToApi from './modules/sendReservesToApi';
+import getReservesFromApi from './modules/getReservesFromApi';
+import addReaction from './modules/addReaction';
+import addScrollAnimation from './modules/addScrollAnimation';
+import { popUpBox, gameId } from './modules/getAppData';
+import getReaction from './modules/getReaction';
+import showReaction from './modules/showReaction';
+import { openPopupCard } from './modules/popUp';
 
 const pokemonsNumbers = 12;
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
-const reactionBaseUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi';
 const pokemonCardsContainer = document.querySelector('.pokemon-cards-container');
-const popUpBox = document.querySelector('.pop-up-box');
-const commentStore = [];
-const reserveStore = [];
-// popUpBox.classList.add('hidePopUp');
 let pokemons = [];
-let gameId;
 
 const heartAnimation = (reactionBtn) => {
   reactionBtn.addEventListener('mouseover', (e) => {
@@ -26,152 +33,10 @@ const heartAnimation = (reactionBtn) => {
     e.target.classList.remove('fa-shake');
   });
 };
-const getAppData = async () => {
-  if (gameId) {
-    return gameId;
-  }
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json; charset=UTF-8',
-    },
-  };
-  const result = await fetch(`${reactionBaseUrl}/apps/`, requestOptions);
-  const dataText = await result.text();
 
-  const data = dataText;
-  gameId = data;
-  return data;
-};
-
-const getReaction = async () => {
-  const appId = gameId;
-  const url = `${reactionBaseUrl}/apps/${appId}/likes`;
-  const result = await fetch(`${url}`);
-  // const contentType = result.headers.get('content-type');
-  const reactionNumbers = await result.text();
-  return reactionNumbers;
-};
-
-const addReaction = async (reactionBtn) => {
-  reactionBtn.addEventListener('click', async (e) => {
-    e.target.classList.remove('fa-shake');
-    e.target.classList.add('fa-bounce');
-    e.target.classList.remove('fa-regular');
-    e.target.classList.add('fa-solid');
-    e.target.classList.add('red');
-    const id = await getAppData();
-    const appId = id;
-    const item = { item_id: `${e.target.id}` };
-    const url = `${reactionBaseUrl}/apps/${appId}/likes`;
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json; charset=UTF-8',
-      },
-      body: JSON.stringify(item),
-    };
-
-    const result = await fetch(`${url}`, requestOptions);
-    const reactionNumbersStr = await getReaction();
-    const reactionNumbers = JSON.parse(reactionNumbersStr);
-    const currentId = reactionNumbers.length - 1;
-    e.target.nextElementSibling.textContent = `${reactionNumbers[currentId].likes}`;
-    e.target.classList.remove('fa-bounce');
-  });
-};
-const closePopUp = (closeCommentBtn, overLay) => {
-  popUpBox.classList.remove('goBackPopUp');
-  closeCommentBtn.addEventListener('click', () => {
-    popUpBox.classList.remove('hidePopUp');
-    popUpBox.classList.add('goBackPopUp');
-    overLay.classList.add('hideOverlay');
-  });
-};
-
-const sendCommentsToApi = async (userName, userComment, id) => {
-  const appId = await getAppData();
-  const userData = {
-    item_id: id,
-    username: userName,
-    comment: userComment,
-  };
-
-  const url = `${reactionBaseUrl}/apps/${appId}/comments`;
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(userData),
-  };
-
-  const result = await fetch(`${url}`, requestOptions);
-  const data = await result.text();
-  return data;
-};
-
-const sendReservesToApi = async (userName, startDate, endDate, id) => {
-  const appId = await getAppData();
-  const reserveData = {
-    item_id: id,
-    username: userName,
-    date_start: startDate,
-    date_end: endDate,
-  };
-  const url = `${reactionBaseUrl}/apps/${appId}/reservations`;
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(reserveData),
-  };
-
-  const result = await fetch(`${url}`, requestOptions);
-  const data = await result.text();
-  return data;
-};
-
-const getCommentsFromApi = async (id) => {
-  const appId = await getAppData();
-  const url = `${reactionBaseUrl}/apps/${appId}/comments?item_id=${id}`;
-  const result = await fetch(`${url}`);
-  let comments = await result.text();
-  comments = JSON.parse(comments);
-  return comments;
-};
-
-const getReservesFromApi = async (id) => {
-  const appId = await getAppData();
-  const url = `${reactionBaseUrl}/apps/${appId}/reservations?item_id=${id}`;
-  const result = await fetch(`${url}`);
-  const reserves = await result.json();
-  return reserves;
-};
-
-const createComments = (commentContainer, commentStore) => {
-  commentStore.forEach((comment, id) => {
-    const listElement = document.createElement('li');
-    const commentCount = document.getElementById('comment-count');
-    commentCount.textContent = `${commentStore.length}`;
-    listElement.textContent = `${comment.creation_date} || "${comment.comment}" By ${comment.username} `;
-    commentContainer.appendChild(listElement);
-  });
-};
-
-const createReservations = (reserveContainer, reserveStore) => {
-  reserveStore.forEach((reserve, id) => {
-    const listElement = document.createElement('li');
-    const reserveCount = document.getElementById('reserve-count');
-    reserveCount.textContent = `${reserveStore.length}`;
-    listElement.innerHTML = `Start Date - ${reserve.date_start} || End Date - ${reserve.date_end} By ${reserve.username}`;
-    reserveContainer.appendChild(listElement);
-  });
-};
-
-const createCommentBox = async (commentBtn, pokemons, commentStore) => {
+const createCommentBox = async (commentBtn, pokemons) => {
   commentBtn.addEventListener('click', async (e) => {
+    openPopupCard();
     const id = e.target.id - 1;
     popUpBox.classList.add('hidePopUp');
     popUpBox.innerHTML = `
@@ -204,6 +69,7 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
     popUpBox.insertAdjacentElement('afterend', overLay);
     const commentContainer = document.querySelector('.comments-container');
 
+    let commentStore = await getCommentsFromApi(pokemons[e.target.id - 1].id);
     createComments(commentContainer, commentStore);
 
     const closeCommentBtn = document.querySelector('.close-comment-btn');
@@ -226,7 +92,8 @@ const createCommentBox = async (commentBtn, pokemons, commentStore) => {
   });
 };
 
-const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
+const createReserveBox = async (reserveBtn, pokemons) => {
+  openPopupCard();
   reserveBtn.addEventListener('click', async (e) => {
     const id = e.target.id - 1;
     popUpBox.classList.add('hidePopUp');
@@ -261,6 +128,7 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
     popUpBox.insertAdjacentElement('afterend', overLay);
     const reserveContainer = document.querySelector('.reserve-container');
 
+    let reserveStore = await getReservesFromApi(pokemons[e.target.id - 1].id);
     createReservations(reserveContainer, reserveStore);
 
     const closeReserveBtn = document.querySelector('.close-reserve-btn');
@@ -286,8 +154,9 @@ const createReserveBox = async (reserveBtn, pokemons, reserveStore) => {
   });
 };
 
-async function createPokemonCard(pokemon) {
-  pokemonCardsContainer.innerHTML += `
+async function createPokemonCard(pokemons) {
+  pokemons.forEach((pokemon) => {
+    pokemonCardsContainer.innerHTML += `
     <div class="col-3 pokemon-card">
             <figure class="image-container text-center">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png" class="pokemon-image" alt="${pokemon.name}">
@@ -298,7 +167,7 @@ async function createPokemonCard(pokemon) {
                 </figcaption>
                 <div class="reaction">
                     <i class="fa-regular fa-heart" id="${pokemon.id}"></i>
-                    <span class="reaction-count"></span>
+                    <span class="reaction-count" id="${pokemon.id}"></span>
                 </div>
             </div>
             <div class="button-container text-center">
@@ -309,41 +178,34 @@ async function createPokemonCard(pokemon) {
             </div>   
         </div>
     `;
+  });
+  const reactionNumbersStr = await getReaction();
+  const reactionNumbers = JSON.parse(reactionNumbersStr);
+  const reactionCounts = document.querySelectorAll('.reaction-count');
+  showReaction(reactionNumbers, reactionCounts);
 
   const reactionBtns = document.querySelectorAll('.fa-heart');
-  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn));
+  reactionBtns.forEach((reactionBtn) => addReaction(reactionBtn, reactionCounts));
   reactionBtns.forEach((reactionBtn) => heartAnimation(reactionBtn));
 
   const commentBtns = document.querySelectorAll('.comment-btn');
-  commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons, commentStore));
+  commentBtns.forEach((commentBtn) => createCommentBox(commentBtn, pokemons));
 
   const reserveBtns = document.querySelectorAll('.reserve-btn');
-  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons, reserveStore));
+  reserveBtns.forEach((reserveBtn) => createReserveBox(reserveBtn, pokemons));
 }
 
 const fetchPokemons = async () => {
   for (let i = 1; i <= pokemonsNumbers; i += 1) {
     pokemons = await getAllPokemons(i, pokemons, baseUrl);
   }
-  pokemons.forEach((pokemon) => createPokemonCard(pokemon));
+  createPokemonCard(pokemons);
+  // pokemons.forEach((pokemon) => createPokemonCard(pokemon));
 };
 
 await fetchPokemons();
 
 const pokemonCards = document.querySelectorAll('.pokemon-card');
 pokemonCards.forEach((pokemonCard) => pokemonCard.classList.add('leftToRightCard'));
-
-function addScrollAnimation() {
-  const element = document.querySelector('#contact-text');
-  const position = element.getBoundingClientRect().top;
-
-  const meText = document.querySelector('#me-text');
-
-  const screenHeight = window.innerHeight;
-  if (position - screenHeight <= 0) {
-    element.classList.add('leftToRight');
-    meText.classList.add('rightToLeft');
-  }
-}
 
 window.addEventListener('scroll', addScrollAnimation);

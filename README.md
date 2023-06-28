@@ -157,7 +157,8 @@ If you like this project follow me on github and wait for more projects.
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-I would like to acknowledge and give credit to the Microverse for the required API.
+I would like to express my gratitude and give credit to Microverse for providing the necessary API, as well as acknowledge Aamir Asaram[Aamir_Asaram](https://github.com/aamir-asaram) for the brilliant idea and code implementation of the pop-up scrollbar. Their contributions have greatly influenced and enhanced my project. Thank you, Microverse, and special thanks to Aamir Asaram for the inspiration!
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
